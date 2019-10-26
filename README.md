@@ -7,4 +7,4 @@
 - Put this file to `models/`
 - To run face reconition
 
-    `python3 reconigning_faces.py`
+    `python3 recognising_faces.py`
