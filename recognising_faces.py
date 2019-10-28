@@ -20,20 +20,23 @@ def verify_face(img, db, vgg_model, k, mode='predict'):
     elif mode == 'cmp':
         cosine_similarity = np.array([metrics.find_cosine_similarity(img_representation, db_img_representation) for db_img_representation in db.data])
         euclidean_distance = np.array([metrics.find_euclidean_distance(img_representation, db_img_representation) for db_img_representation in db.data])
-        knn2img = np.argpartition(euclidean_distance, range(k))[:k]
+        if db.size == 0:
+            knn2img = []
+        else:
+            knn2img = np.argpartition(euclidean_distance, range(min(k, db.size)))[:k]
         return img_representation, knn2img, cosine_similarity, euclidean_distance
     else:
         raise Exception('Unknown mode')
 
 
 def show_similar(face, photo_ids, db_photo_dir, metric, k):
-    fig, imgs = plt.subplots(1, k, num='{k} nearest photos'.format(k=k))
+    fig, imgs = plt.subplots(1, k + 1, num='{k} nearest photos'.format(k=k))
     for ax in imgs:
         ax.set_xticks([])
         ax.set_yticks([])
     imgs[0].imshow(face)
     imgs[0].set_title('face2find')
-    for i in range(1, min(k, len(photo_ids))):
+    for i in range(1, min(k + 1, len(photo_ids) + 1)):
         imgs[i].imshow(image.load_img(db_photo_dir+'{}.jpg'.format(photo_ids[i - 1])))
         imgs[i].set_title(metric[i - 1])
     plt.show()
