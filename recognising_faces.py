@@ -33,7 +33,7 @@ def show_similar(face, photo_ids, db_photo_dir, metric, k):
         ax.set_yticks([])
     imgs[0].imshow(face)
     imgs[0].set_title('face2find')
-    for i in range(1, k):
+    for i in range(1, min(k, len(photo_ids))):
         imgs[i].imshow(image.load_img(db_photo_dir+'{}.jpg'.format(photo_ids[i - 1])))
         imgs[i].set_title(metric[i - 1])
     plt.show()
