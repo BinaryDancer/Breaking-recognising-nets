@@ -58,6 +58,8 @@ def main():
 
     db = data.DataBase()
     vgg_model = model.get_vgg_model()
+    vgg_descriptor = model.get_vgg_model2()
+
     cur_time = time.time() - 5
 
     while True:
@@ -70,10 +72,10 @@ def main():
             if file[0] == '.':
                 continue
             print('Working with {}'.format(file))
-            face_imgs, faces = preprocessing.get_img(file, input_photo_dir, True if mode == 3 else False)
+            face_imgs, faces = preprocessing.get_img(file, input_photo_dir, mode == 3, db_model=[db, vgg_model])
 
             for i in range(len(faces)):
-                img_descriptor, knn2img, cosine_metric, euclidean_metric = verify_face(faces[i], db, vgg_model,
+                img_descriptor, knn2img, cosine_metric, euclidean_metric = verify_face(faces[i], db, vgg_descriptor,
                                                                                        k=k_nearest,
                                                                                        mode='predict' if mode == 1 else 'cmp')
                 if mode == 3:

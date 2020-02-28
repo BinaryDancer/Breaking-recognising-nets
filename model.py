@@ -54,5 +54,11 @@ def vgg_model():
 def get_vgg_model(path='models/vgg_face_weights.h5'):
     model = vgg_model()
     model.load_weights(path)
+    return model
+
+
+def get_vgg_model2(path='models/vgg_face_weights.h5'):
+    model = vgg_model()
+    model.load_weights(path)
     vgg_face_descriptor = Model(inputs=model.layers[0].input, outputs=model.layers[-2].output)
     return vgg_face_descriptor
