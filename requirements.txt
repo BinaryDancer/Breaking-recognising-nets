@@ -1,4 +1,6 @@
-matplotlib
-numpy
-opencv-python
-tensorflow
+matplotlib~=3.2.1
+numpy~=1.18.3
+opencv-python~=4.2.0.34
+tensorflow~=2.1.0
+
+Keras~=2.3.1

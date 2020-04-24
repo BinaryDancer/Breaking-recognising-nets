@@ -1,5 +1,5 @@
 import cv2
-from keras.preprocessing import image
+from tensorflow.keras.preprocessing import image
 import matplotlib.pyplot as plt
 import numpy as np
 import os
@@ -49,7 +49,7 @@ database_photo_dir = 'db_photo/'
 
 def main():
     mode = int(input('Enter:\n\t1 - to add photos to DB\n\t3 - to change photo and show nearest photos\n'))
-    if mode not in (1, 3):
+    if mode not in (1, 2, 3):
         raise Exception('Wrong execution mode')
 
     k_nearest = 0
@@ -78,9 +78,11 @@ def main():
                 img_descriptor, knn2img, cosine_metric, euclidean_metric = verify_face(faces[i], db, vgg_descriptor,
                                                                                        k=k_nearest,
                                                                                        mode='predict' if mode == 1 else 'cmp')
+
                 if mode == 3:
                     cv2.imwrite("db_changed_photo/" + file.split(".")[0]+'_{}.jpg'.format(i), face_imgs[i])
                     show_similar(face_imgs[i], knn2img, database_photo_dir, euclidean_metric[knn2img], k_nearest)
+
                     continue
                 db.append(img_descriptor)
                 cv2.imwrite(database_photo_dir + '{}.jpg'.format(db.size - 1), face_imgs[i])
