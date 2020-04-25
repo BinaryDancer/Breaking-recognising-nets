@@ -23,8 +23,8 @@ def preprocess_photo(img_name, dir_path='input_photo/', add_noize=False, db_mode
     faces = face_cascade.detectMultiScale(
         img_gray,
         scaleFactor=1.1,
-        minNeighbors=30,
-        minSize=(10, 10)
+        minNeighbors=25,
+        minSize=(5, 5)
     )
 
     faces_img = []
@@ -34,12 +34,12 @@ def preprocess_photo(img_name, dir_path='input_photo/', add_noize=False, db_mode
         if add_noize:
             foolbox_model = foolbox.TensorFlowModel(model=db_model[1], bounds=(0, 255))
             tmp_face = np.expand_dims(cv2.resize(img2[y: y + h, x: x + w], dsize=(224, 224)), axis=0)
-            # attack = foolbox.attacks.FGSM()
-            attack = foolbox.attacks.L2DeepFoolAttack()
+            attack = foolbox.attacks.FGSM()
+            # attack = foolbox.attacks.L2DeepFoolAttack()
 
             print('real class: {}'.format([np.argmax(db_model[1].predict(tmp_face)),]))
-            # new_face = attack(foolbox_model, np.array([tmp_face]), Misclassification(np.array([db_model[1].predict(tmp_face).argmax()], dtype=np.int64)), epsilons=0.0007)
-            new_face = attack(foolbox_model, np.array([tmp_face,]), np.array([np.argmax(db_model[1].predict(tmp_face)),]), epsilons=0.0007)
+            new_face = attack(foolbox_model, np.array([tmp_face]), Misclassification(np.array([db_model[1].predict(tmp_face).argmax()])), epsilons=0.0007)
+            # new_face = attack(foolbox_model, np.array([tmp_face,]), np.array([np.argmax(db_model[1].predict(tmp_face)),]), epsilons=0.0007)
             # new_face = attack(foolbox_model, tmp_face,)
             # new_face = attack(tmp_face, labels=np.ndarray(1))
             print('new class: {}'.format(db_model[1].predict(new_face)))

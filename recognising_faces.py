@@ -84,7 +84,7 @@ def main():
                     show_similar(face_imgs[i], knn2img, database_photo_dir, euclidean_metric[knn2img], k_nearest)
 
                     continue
-                db.append(img_descriptor)
+                db.append(img_descriptor, file.split('0')[0])
                 cv2.imwrite(database_photo_dir + '{}.jpg'.format(db.size - 1), face_imgs[i])
                 # copyfile(input_photo_dir + file, database_photo_dir + '{}.jpg'.format(db.size - 1))
             os.remove(input_photo_dir + file)
