@@ -20,12 +20,13 @@ def avgPrK(img_representation, name, db, k):
     euclidean_distance = np.array([find_euclidean_distance(img_representation, db_img_representation) for db_img_representation in db.data])
     kn = np.argpartition(euclidean_distance, range(min(k, db.size)))[:k]
     same = 0
-    i = 0
+    i = 1
     res = 0
     for idx in kn:
         if db.names[idx] == name:
             same += 1
             res += same / i
+        i += 1
     res *= 1 / k
     return res
 

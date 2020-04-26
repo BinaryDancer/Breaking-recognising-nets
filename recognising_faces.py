@@ -5,6 +5,7 @@ import numpy as np
 import os
 from shutil import copyfile
 import time
+from metrics import avgPrK
 
 
 import data
@@ -79,7 +80,9 @@ def main():
                                                                                        k=k_nearest,
                                                                                        mode='predict' if mode == 1 else 'cmp')
 
-                if mode == 3:
+                if mode == 3 or mode == 2:
+                    print(avgPrK(img_descriptor, file.split('0')[0], db, k_nearest))
+                    print(*knn2img)
                     cv2.imwrite("db_changed_photo/" + file.split(".")[0]+'_{}.jpg'.format(i), face_imgs[i])
                     show_similar(face_imgs[i], knn2img, database_photo_dir, euclidean_metric[knn2img], k_nearest)
 
