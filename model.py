@@ -1,5 +1,5 @@
-from tensorflow.keras.layers import Convolution2D, ZeroPadding2D, MaxPooling2D, Flatten, Dropout, Activation
-from tensorflow.keras.models import Model, Sequential
+from keras.layers import Convolution2D, ZeroPadding2D, MaxPooling2D, Flatten, Dropout, Activation
+from keras.models import Model, Sequential
 
 
 def vgg_model():
