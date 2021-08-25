@@ -1,6 +1,6 @@
 matplotlib==3.2.1
 numpy==1.18.3
 opencv-python==4.2.0.34
-tensorflow==2.1.0
+tensorflow==2.5.1
 foolbox==2.4.0
 Keras==2.3.1
